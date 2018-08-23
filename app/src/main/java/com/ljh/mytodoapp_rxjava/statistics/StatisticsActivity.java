@@ -12,7 +12,6 @@ import android.view.MenuItem;
 
 import com.ljh.mytodoapp_rxjava.R;
 import com.ljh.mytodoapp_rxjava.data.source.TasksLocalDataSource;
-import com.ljh.mytodoapp_rxjava.data.source.TasksRemoteDataSource;
 import com.ljh.mytodoapp_rxjava.data.source.TasksRepository;
 import com.ljh.mytodoapp_rxjava.utils.ActivityUtils;
 import com.ljh.mytodoapp_rxjava.utils.schedulers.SchedulerProvider;
@@ -57,7 +56,7 @@ public class StatisticsActivity extends AppCompatActivity {
         }
 
         new StatisticsPresenter(
-                TasksRepository.getInstance(TasksLocalDataSource.getInstance(), TasksRemoteDataSource.getInstance()),
+                TasksRepository.getInstance(TasksLocalDataSource.getInstance()),
                 statisticsFragment,
                 SchedulerProvider.getInstance());
     }

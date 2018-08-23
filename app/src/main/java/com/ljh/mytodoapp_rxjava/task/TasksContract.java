@@ -16,7 +16,7 @@ import javax.annotation.Nonnull;
  */
 public interface TasksContract {
     interface View extends BaseView<Presenter>{
-        void setLoadingIndicator(boolean active);
+//        void setLoadingIndicator(boolean active);
 
         void showTasks(List<Task> taskList);
 
@@ -54,7 +54,7 @@ public interface TasksContract {
     interface Presenter extends BasePresenter{
         void result(int requestCode, int resultCode);
 
-        void loadTasks(boolean forceUpdate);
+        void loadTasks();
 
         void addNewTask();
 

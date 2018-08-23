@@ -30,8 +30,6 @@ public class TasksPresenter implements TasksContract.Presenter {
     @NonNull
     private TasksFilterType mCurrentFiltering = TasksFilterType.ALL_TASKS;
 
-    private boolean mFirstLoad = true;
-
     //可以快速解除所有添加的Disposable类
     @NonNull
     private CompositeDisposable mCompositeDisposable;
@@ -51,18 +49,7 @@ public class TasksPresenter implements TasksContract.Presenter {
     }
 
     @Override
-    public void loadTasks(boolean forceUpdate) {
-        loadTasks(forceUpdate || mFirstLoad, true);
-        mFirstLoad = false;
-    }
-
-    private void loadTasks(boolean forceUpdate, boolean showLoadingUI) {
-        if (showLoadingUI) {
-            mTasksView.setLoadingIndicator(true);
-        }
-        if (forceUpdate) {
-            mTasksRepository.refreshTasks();
-        }
+    public void loadTasks() {
         //清除所有disposable
         mCompositeDisposable.clear();
         Disposable disposable = mTasksRepository
@@ -86,13 +73,14 @@ public class TasksPresenter implements TasksContract.Presenter {
                         //onNext
                         tasks -> {
                             processTasks(tasks);
-                            mTasksView.setLoadingIndicator(false);
+//                            mTasksView.setLoadingIndicator(false);
                         },
                         //onError
                         throwable -> mTasksView.showLoadingTasksError());
 
         mCompositeDisposable.add(disposable);
     }
+
 
     private void processTasks(List<Task> tasks) {
         if(tasks.isEmpty()) {
@@ -147,21 +135,21 @@ public class TasksPresenter implements TasksContract.Presenter {
     public void completeTask(@NonNull Task completedTask) {
         mTasksRepository.completeTask(completedTask);
         mTasksView.showTaskMarkedComplete();
-        loadTasks(false,false);
+        loadTasks();
     }
 
     @Override
     public void activateTask(@NonNull Task activeTask) {
         mTasksRepository.activateTask(activeTask);
         mTasksView.showTaskMarkedActive();
-        loadTasks(false, false);
+        loadTasks();
     }
 
     @Override
     public void clearCompletedTasks() {
         mTasksRepository.clearCompletedTasks();
         mTasksView.showCompletedTaskCleared();
-        loadTasks(false,false);
+        loadTasks();
     }
 
     @Override
@@ -176,7 +164,7 @@ public class TasksPresenter implements TasksContract.Presenter {
 
     @Override
     public void subscribe() {
-        loadTasks(false);
+        loadTasks();
     }
 
     @Override

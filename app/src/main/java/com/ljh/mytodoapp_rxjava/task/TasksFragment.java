@@ -126,17 +126,17 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         fab.setOnClickListener(__ -> mPresenter.addNewTask());
 
         // Set up progress indicator
-        final ScrollChildSwipeRefreshLayout swipeRefreshLayout =
-                root.findViewById(R.id.refresh_layout);
-        swipeRefreshLayout.setColorSchemeColors(
-                ContextCompat.getColor(getActivity(), R.color.colorPrimary),
-                ContextCompat.getColor(getActivity(), R.color.colorAccent),
-                ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark)
-        );
-        // Set the scrolling view in the custom SwipeRefreshLayout.
-        swipeRefreshLayout.setScrollUpChild(listView);
-
-        swipeRefreshLayout.setOnRefreshListener(() -> mPresenter.loadTasks(false));
+//        final ScrollChildSwipeRefreshLayout swipeRefreshLayout =
+//                root.findViewById(R.id.refresh_layout);
+//        swipeRefreshLayout.setColorSchemeColors(
+//                ContextCompat.getColor(getActivity(), R.color.colorPrimary),
+//                ContextCompat.getColor(getActivity(), R.color.colorAccent),
+//                ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark)
+//        );
+//        // Set the scrolling view in the custom SwipeRefreshLayout.
+//        swipeRefreshLayout.setScrollUpChild(listView);
+//
+//        swipeRefreshLayout.setOnRefreshListener(() -> mPresenter.loadTasks(false));
 
         setHasOptionsMenu(true);
 
@@ -153,7 +153,8 @@ public class TasksFragment extends Fragment implements TasksContract.View {
                 showFilteringPopUpMenu();
                 break;
             case R.id.menu_refresh:
-                mPresenter.loadTasks(true);
+//                mPresenter.loadTasks(true);
+                showMessage("No refresh");
                 break;
         }
         return true;
@@ -165,15 +166,15 @@ public class TasksFragment extends Fragment implements TasksContract.View {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @Override
-    public void setLoadingIndicator(boolean active) {
-        if(getView() == null) {
-            return;
-        }
-        final SwipeRefreshLayout swipeRefreshLayout = getActivity().findViewById(R.id.refresh_layout);
-        //post方法，将runnable放在UI中执行，()-> 返回一个runnable对象
-        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(active));
-    }
+//    @Override
+//    public void setLoadingIndicator(boolean active) {
+//        if(getView() == null) {
+//            return;
+//        }
+//        final SwipeRefreshLayout swipeRefreshLayout = getActivity().findViewById(R.id.refresh_layout);
+//        //post方法，将runnable放在UI中执行，()-> 返回一个runnable对象
+//        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(active));
+//    }
 
     @Override
     public void showTasks(List<Task> taskList) {
@@ -298,7 +299,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
                     mPresenter.setFiltering(TasksFilterType.ALL_TASKS);
                     break;
             }
-            mPresenter.loadTasks(false);
+            mPresenter.loadTasks();
             return true;
         });
         popupMenu.show();

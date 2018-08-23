@@ -98,11 +98,6 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void refreshTasks() {
-        //在romote中更新task
-    }
-
-    @Override
     public void deleteAllTasks() {
         LitePal.deleteAll(Task.class);
     }

@@ -2,7 +2,6 @@ package com.ljh.mytodoapp_rxjava.task;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
-import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,7 +12,6 @@ import android.view.MenuItem;
 
 import com.ljh.mytodoapp_rxjava.R;
 import com.ljh.mytodoapp_rxjava.data.source.TasksLocalDataSource;
-import com.ljh.mytodoapp_rxjava.data.source.TasksRemoteDataSource;
 import com.ljh.mytodoapp_rxjava.data.source.TasksRepository;
 import com.ljh.mytodoapp_rxjava.statistics.StatisticsActivity;
 import com.ljh.mytodoapp_rxjava.utils.ActivityUtils;
@@ -55,7 +53,7 @@ public class TasksActivity extends AppCompatActivity {
 
         // Create the presenter
         mTasksPresenter = new TasksPresenter(
-                TasksRepository.getInstance(TasksLocalDataSource.getInstance(), TasksRemoteDataSource.getInstance()),
+                TasksRepository.getInstance(TasksLocalDataSource.getInstance()),
                 tasksFragment,
                 SchedulerProvider.getInstance()
                 );

@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 
 import com.ljh.mytodoapp_rxjava.R;
 import com.ljh.mytodoapp_rxjava.data.source.TasksLocalDataSource;
-import com.ljh.mytodoapp_rxjava.data.source.TasksRemoteDataSource;
 import com.ljh.mytodoapp_rxjava.data.source.TasksRepository;
 import com.ljh.mytodoapp_rxjava.utils.ActivityUtils;
 import com.ljh.mytodoapp_rxjava.utils.schedulers.SchedulerProvider;
@@ -60,7 +59,7 @@ public class AddEditTaskActivity extends AppCompatActivity{
         }
 
         mAddEditTaskPresenter = new AddEditTaskPresenter(taskId,
-                TasksRepository.getInstance(TasksLocalDataSource.getInstance(), TasksRemoteDataSource.getInstance()),
+                TasksRepository.getInstance(TasksLocalDataSource.getInstance()),
                 addEditTaskFragment,
                 shouldLoadDataFromRepo,
                 SchedulerProvider.getInstance());

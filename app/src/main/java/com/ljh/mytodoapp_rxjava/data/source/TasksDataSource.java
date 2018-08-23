@@ -33,8 +33,6 @@ public interface TasksDataSource {
 
     void clearCompletedTasks();
 
-    void refreshTasks();
-
     void deleteAllTasks();
 
     void deleteTask(@Nonnull String taskId);
