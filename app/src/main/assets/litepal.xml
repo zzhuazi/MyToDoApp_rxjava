@@ -1,0 +1,7 @@
+<litepal>
+<dbname value="todoapp"/>
+<version value="1"/>
+<list>
+   <mapping class="com.ljh.mytodoapp_rxjava.data.Task"/>
+</list>
+</litepal>
