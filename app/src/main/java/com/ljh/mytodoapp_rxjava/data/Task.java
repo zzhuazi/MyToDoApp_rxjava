@@ -18,43 +18,29 @@ import java.util.UUID;
 public class Task extends LitePalSupport {
 
     @NonNull
-    @SerializedName("id")
-    private final String mId;
+    private  int id;
 
     @Nullable
-    private final String title;
+    private  String title;
 
     @Nullable
-    private final String description;
+    private  String description;
 
-    private final boolean completed;
+    private  boolean completed;
 
-    //创建一个未完成的task
-    public Task(String mTitle, String mDescription) {
-        this(UUID.randomUUID().toString(), mTitle, mDescription, false);
-    }
-
-    //创建一个已有id的task（或者复制其他task）
-    public Task(@NonNull String mId, String mTitle, String mDescription) {
-        this(mId, mTitle, mDescription, false);
-    }
-
-    //创建一个已完成的task
-    public Task(String mTitle, String mDescription, boolean mCompleted) {
-        this(UUID.randomUUID().toString(), mTitle, mDescription, mCompleted);
-    }
-
-    //创建一个已完成的并带有id的task
-    public Task(@NonNull String id, String title, String description, boolean completed) {
-        this.mId = id;
+    public Task(String title, String description, boolean completed) {
         this.title = title;
         this.description = description;
         this.completed = completed;
     }
 
     @NonNull
-    public String getMId() {
-        return mId;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(@NonNull int id) {
+        this.id = id;
     }
 
     @Nullable
@@ -62,13 +48,8 @@ public class Task extends LitePalSupport {
         return title;
     }
 
-    @Nullable
-    public String getTitleForList() {
-        if (!Strings.isNullOrEmpty(title)) {
-            return title;
-        } else {
-            return description;
-        }
+    public void setTitle(@Nullable String title) {
+        this.title = title;
     }
 
     @Nullable
@@ -76,12 +57,16 @@ public class Task extends LitePalSupport {
         return description;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public void setDescription(@Nullable String description) {
+        this.description = description;
     }
 
-    public boolean isActive() {
-        return !completed;
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    public boolean getCompleted() {
+        return completed;
     }
 
     public boolean isEmpty() {
@@ -96,14 +81,14 @@ public class Task extends LitePalSupport {
             return false;
         }
         Task task = (Task) obj;
-        return Objects.equal(mId, task.mId) &&
+        return Objects.equal(id, task.id) &&
                 Objects.equal(title, task.title) &&
                 Objects.equal(description, task.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(mId, title, description);
+        return Objects.hashCode(id, title, description);
     }
 
     @Override

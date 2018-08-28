@@ -30,7 +30,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         }
 
         // Get the requested task id
-        String taskId = getIntent().getStringExtra(EXTRA_TASK_ID);
+        Integer taskId = getIntent().getIntExtra(EXTRA_TASK_ID,-1);
 
         TaskDetailFragment taskDetailFragment = (TaskDetailFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.contentFrame);

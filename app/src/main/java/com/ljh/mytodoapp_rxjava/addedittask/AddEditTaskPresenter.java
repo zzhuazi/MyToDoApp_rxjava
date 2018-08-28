@@ -24,14 +24,14 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter {
     private final BaseSchedulerProvider mSchedulerProvider;
 
     @Nullable
-    private String mTaskId;
+    private Integer mTaskId;
 
     private boolean mIsDataMissing;
 
     @NonNull
     private CompositeDisposable mCompositeDisposable;
 
-    public AddEditTaskPresenter(String mTaskId, @NonNull TasksDataSource mTasksRepository, @NonNull AddEditTaskContract.View mAddTaskView, boolean shouldLoadDataFromRepo, @NonNull BaseSchedulerProvider mSchedulerProvider) {
+    public AddEditTaskPresenter(int mTaskId, @NonNull TasksDataSource mTasksRepository, @NonNull AddEditTaskContract.View mAddTaskView, boolean shouldLoadDataFromRepo, @NonNull BaseSchedulerProvider mSchedulerProvider) {
         this.mTasksRepository = mTasksRepository;
         this.mAddTaskView = mAddTaskView;
         this.mSchedulerProvider = mSchedulerProvider;
@@ -55,12 +55,14 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter {
         if (isNewTask()) {
             throw new RuntimeException("updateTask() was called but task is new");
         }
-        mTasksRepository.saveTask(new Task(title, description));
+        Task task = new Task(title, description, false);
+        task.setId(mTaskId);
+        mTasksRepository.updateTask(task);
         mAddTaskView.showTasksList();
     }
 
     private void createTask(String title, String description) {
-        Task newTask = new Task(title, description);
+        Task newTask = new Task(title, description, false);
         if (newTask.isEmpty()) {
             mAddTaskView.showEmptyTaskError();
         } else {
@@ -116,7 +118,7 @@ public class AddEditTaskPresenter implements AddEditTaskContract.Presenter {
     }
 
     private boolean isNewTask() {
-        return mTaskId == null;
+        return mTaskId == null ||  mTaskId == -1;
     }
 
     @Override

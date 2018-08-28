@@ -64,18 +64,18 @@ public class TasksAdapter extends BaseAdapter {
         final Task task = getItem(i);
 
         TextView titleTv = rowView.findViewById(R.id.title);
-        titleTv.setText(task.getTitleForList());
+        titleTv.setText(task.getTitle());
 
         CheckBox completeCB = rowView.findViewById(R.id.complete);
 
-        completeCB.setChecked(task.isCompleted());
-        if(task.isCompleted()) {
+        completeCB.setChecked(task.getCompleted());
+        if(task.getCompleted()) {
             rowView.setBackgroundDrawable(viewGroup.getContext().getResources().getDrawable(R.drawable.list_completed_touch_feedback));
         }else {
             rowView.setBackgroundDrawable(viewGroup.getContext().getResources().getDrawable(R.drawable.touch_feedback));
         }
         completeCB.setOnClickListener(__ ->{
-            if(!task.isCompleted()) {
+            if(!task.getCompleted()) {
                 mItemListener.onCompleteTaskClick(task);
             }else {
                 mItemListener.onActivateTaskClick(task);

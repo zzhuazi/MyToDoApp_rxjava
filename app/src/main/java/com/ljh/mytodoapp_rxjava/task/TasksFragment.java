@@ -191,7 +191,7 @@ public class TasksFragment extends Fragment implements TasksContract.View {
     }
 
     @Override
-    public void showTaskDetailUi(String taskId) {
+    public void showTaskDetailUi(int taskId) {
         Intent intent = new Intent(getContext(), TaskDetailActivity.class);
         intent.putExtra(TaskDetailActivity.EXTRA_TASK_ID, taskId);
         startActivity(intent);

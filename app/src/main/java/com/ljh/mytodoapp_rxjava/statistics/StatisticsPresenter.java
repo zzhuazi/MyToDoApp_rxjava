@@ -11,6 +11,7 @@ import com.ljh.mytodoapp_rxjava.utils.schedulers.BaseSchedulerProvider;
 import io.reactivex.Flowable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Predicate;
 
 /**
  * @author Administrator
@@ -50,8 +51,13 @@ public class StatisticsPresenter implements StatisticContract.Presenter {
         Flowable<Task> tasks = mTasksRepository
                 .getTasks()
                 .flatMap(Flowable::fromIterable);
-        Flowable<Long> completedTasks = tasks.filter(Task::isCompleted).count().toFlowable();
-        Flowable<Long> activeTasks = tasks.filter(Task::isActive).count().toFlowable();
+        Flowable<Long> completedTasks = tasks.filter(Task::getCompleted).count().toFlowable();
+        Flowable<Long> activeTasks = tasks.filter(new Predicate<Task>() {
+            @Override
+            public boolean test(Task task) throws Exception {
+                return !task.getCompleted();
+            }
+        }).count().toFlowable();
         Disposable disposable = Flowable
                 .zip(completedTasks, activeTasks, (completed, active) -> Pair.create(active, completed))
                 .subscribeOn(mSchedularProvider.computation())

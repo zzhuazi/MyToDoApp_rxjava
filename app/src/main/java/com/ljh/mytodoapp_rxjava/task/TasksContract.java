@@ -22,7 +22,7 @@ public interface TasksContract {
 
         void showAddTask();
 
-        void showTaskDetailUi(String taskId);
+        void showTaskDetailUi(int taskId);
 
         void showTaskMarkedComplete();
 

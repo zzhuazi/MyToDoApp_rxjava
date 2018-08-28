@@ -19,21 +19,23 @@ public interface TasksDataSource {
 
     Flowable<List<Task>> getTasks();
 
-    Flowable<Optional<Task>> getTask(@NonNull String taskId);
+    Flowable<Optional<Task>> getTask(@NonNull int taskId);
 
     void saveTask(@Nonnull Task task);
 
+    void updateTask(@NonNull Task task);
+
     void completeTask(@Nonnull Task task);
 
-    void completeTask(@Nonnull String taskId);
+    void completeTask(@Nonnull int taskId);
 
     void activateTask(@Nonnull Task task);
 
-    void activateTask(@Nonnull String taskId);
+    void activateTask(@Nonnull int taskId);
 
     void clearCompletedTasks();
 
     void deleteAllTasks();
 
-    void deleteTask(@Nonnull String taskId);
+    void deleteTask(@Nonnull int taskId);
 }

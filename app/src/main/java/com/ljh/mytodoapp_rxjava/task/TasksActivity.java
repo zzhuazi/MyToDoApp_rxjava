@@ -75,8 +75,7 @@ public class TasksActivity extends AppCompatActivity {
                             break;
                         case R.id.statistics_navigation_menu_item:
                             //to statisticsActivity
-                            Intent intent =
-                                    new Intent(TasksActivity.this, StatisticsActivity.class);
+                            Intent intent = new Intent(TasksActivity.this, StatisticsActivity.class);
                             startActivity(intent);
                             break;
                         default:

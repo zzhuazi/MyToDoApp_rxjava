@@ -58,9 +58,9 @@ public class TasksPresenter implements TasksContract.Presenter {
                 .filter(task -> {
                     switch (mCurrentFiltering) {
                         case ACTIVE_TASKS:
-                            return task.isActive();
+                            return !task.getCompleted();
                         case COMPLETED_TASKS:
-                            return task.isCompleted();
+                            return task.getCompleted();
                         case ALL_TASKS:
                         default:
                             return true;
@@ -128,7 +128,7 @@ public class TasksPresenter implements TasksContract.Presenter {
 
     @Override
     public void openTaskDetails(@NonNull Task requestTask) {
-        mTasksView.showTaskDetailUi(requestTask.getMId());
+        mTasksView.showTaskDetailUi(requestTask.getId());
     }
 
     @Override

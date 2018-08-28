@@ -32,14 +32,14 @@ public class TasksRepository implements TasksDataSource {
         this.mTasksLocalDataSource = mTasksLocalDataSource;
     }
 
-    public static TasksRepository getInstance(@Nonnull TasksDataSource mTasksLocalDataSource){
-        if(INSTANCE == null) {
+    public static TasksRepository getInstance(@Nonnull TasksDataSource mTasksLocalDataSource) {
+        if (INSTANCE == null) {
             INSTANCE = new TasksRepository(mTasksLocalDataSource);
         }
         return INSTANCE;
     }
 
-    public static void destroyInstance(){
+    public static void destroyInstance() {
         INSTANCE = null;
     }
 
@@ -49,18 +49,21 @@ public class TasksRepository implements TasksDataSource {
                 .flatMap(tasks -> Flowable.fromIterable(tasks))
                 .toList()
                 .toFlowable();
-
     }
 
     @Override
-    public Flowable<Optional<Task>> getTask(@NonNull String taskId) {
+    public Flowable<Optional<Task>> getTask(@NonNull int taskId) {
         return mTasksLocalDataSource.getTask(taskId);
     }
-
 
     @Override
     public void saveTask(@Nonnull Task task) {
         mTasksLocalDataSource.saveTask(task);
+    }
+
+    @Override
+    public void updateTask(@NonNull Task task) {
+        mTasksLocalDataSource.updateTask(task);
     }
 
     @Override
@@ -69,10 +72,9 @@ public class TasksRepository implements TasksDataSource {
     }
 
     @Override
-    public void completeTask(@Nonnull String taskId) {
+    public void completeTask(@Nonnull int taskId) {
         mTasksLocalDataSource.completeTask(taskId);
     }
-
 
     @Override
     public void activateTask(@Nonnull Task task) {
@@ -80,14 +82,13 @@ public class TasksRepository implements TasksDataSource {
     }
 
     @Override
-    public void activateTask(@Nonnull String taskId) {
+    public void activateTask(@Nonnull int taskId) {
         mTasksLocalDataSource.activateTask(taskId);
     }
 
     @Override
     public void clearCompletedTasks() {
         mTasksLocalDataSource.clearCompletedTasks();
-
     }
 
     @Override
@@ -96,7 +97,7 @@ public class TasksRepository implements TasksDataSource {
     }
 
     @Override
-    public void deleteTask(@Nonnull String taskId) {
+    public void deleteTask(@Nonnull int taskId) {
         mTasksLocalDataSource.deleteTask(checkNotNull(taskId));
     }
 }

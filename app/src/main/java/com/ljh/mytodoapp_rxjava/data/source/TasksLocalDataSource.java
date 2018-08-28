@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.ljh.mytodoapp_rxjava.data.Task;
 
@@ -51,45 +52,50 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public Flowable<Optional<Task>> getTask(@NonNull String taskId) {
-        List<Task> tasks = LitePal.where("mid = ?", taskId).find(Task.class);
-        if (tasks.size() > 0) {
-            return Flowable.just(Optional.of(tasks.get(0)));
+    public Flowable<Optional<Task>> getTask(@NonNull int taskId) {
+        Task task = LitePal.find(Task.class, taskId);
+        if (task != null) {
+            return Flowable.just(Optional.of(task));
         } else
             return Flowable.empty();
     }
 
     @Override
     public void saveTask(@Nonnull Task task) {
-        List<Task> tasks = LitePal.where("mid = ?", task.getMId()).find(Task.class);
-        if(tasks.size() > 0) {
-            return;
-        }
         task.save();
     }
 
     @Override
-    public void completeTask(@Nonnull Task task) {
-        completeTask(task.getMId());
+    public void updateTask(@NonNull Task task) {
+        ContentValues values = new ContentValues();
+        values.put("title", task.getTitle());
+        values.put("completed",task.getCompleted());
+        values.put("description", task.getDescription());
+        LitePal.update(Task.class, values, task.getId());
     }
 
     @Override
-    public void completeTask(@Nonnull String taskId) {
+    public void completeTask(@Nonnull Task task) {
+        completeTask(task.getId());
+    }
+
+    @Override
+    public void completeTask(@Nonnull int taskId) {
         ContentValues values = new ContentValues();
         values.put("completed", true);
-        LitePal.updateAll(Task.class, values, "mid = ?", taskId);
+        LitePal.update(Task.class, values, taskId);
     }
 
     @Override
     public void activateTask(@Nonnull Task task) {
-        activateTask(task.getMId());
+        activateTask(task.getId());
     }
 
     @Override
-    public void activateTask(@Nonnull String taskId) {
+    public void activateTask(@Nonnull int taskId) {
         ContentValues values = new ContentValues();
         values.put("completed", false);
-        LitePal.updateAll(Task.class, values, "mid = ?", taskId);
+        LitePal.update(Task.class, values, taskId);
     }
 
     @Override
@@ -103,7 +109,7 @@ public class TasksLocalDataSource implements TasksDataSource {
     }
 
     @Override
-    public void deleteTask(@Nonnull String taskId) {
-        LitePal.deleteAll(Task.class, "mid = ?",taskId);
+    public void deleteTask(@Nonnull int taskId) {
+        LitePal.delete(Task.class, taskId);
     }
 }

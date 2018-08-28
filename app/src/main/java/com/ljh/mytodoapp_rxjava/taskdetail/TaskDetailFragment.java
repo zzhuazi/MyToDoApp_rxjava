@@ -41,9 +41,9 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
 
     private CheckBox mDetailCompleteStatus;
 
-    public static TaskDetailFragment newInstance(@Nullable String taskId) {
+    public static TaskDetailFragment newInstance(@Nullable int taskId) {
         Bundle arguments = new Bundle();
-        arguments.putString(ARGUMENT_TASK_ID, taskId);
+        arguments.putInt(ARGUMENT_TASK_ID, taskId);
         TaskDetailFragment fragment = new TaskDetailFragment();
         fragment.setArguments(arguments);
         return fragment;
@@ -155,7 +155,7 @@ public class TaskDetailFragment extends Fragment implements TaskDetailContract.V
     }
 
     @Override
-    public void showEditTask(String taskId) {
+    public void showEditTask(int taskId) {
         Intent intent = new Intent(getContext(), AddEditTaskActivity.class);
         intent.putExtra(AddEditTaskFragment.ARGUMENT_EDIT_TASK_ID, taskId);
         startActivityForResult(intent, REQUEST_EDIT_TASK);

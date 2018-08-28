@@ -26,12 +26,12 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
     private final BaseSchedulerProvider mSchedularProvider;
 
     @Nullable
-    private String mTaskId;
+    private int mTaskId;
 
     @NonNull
     private CompositeDisposable mCompositeDisposable;
 
-    public TaskDetailPresenter(String mTaskId,
+    public TaskDetailPresenter(int mTaskId,
                                @NonNull TasksRepository mTasksRepository,
                                @NonNull TaskDetailContract.View mTaskDetailView,
                                @NonNull BaseSchedulerProvider mSchedularProvider) {
@@ -46,39 +46,39 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
 
     @Override
     public void editTask() {
-        if (Strings.isNullOrEmpty(mTaskId)) {
-            mTaskDetailView.showMissingTask();
-            return;
-        }
+//        if () {
+//            mTaskDetailView.showMissingTask();
+//            return;
+//        }
         mTaskDetailView.showEditTask(mTaskId);
     }
 
     @Override
     public void deleteTask() {
-        if (Strings.isNullOrEmpty(mTaskId)) {
-            mTaskDetailView.showMissingTask();
-            return;
-        }
+//        if (Strings.isNullOrEmpty(mTaskId)) {
+//            mTaskDetailView.showMissingTask();
+//            return;
+//        }
         mTasksRepository.deleteTask(mTaskId);
         mTaskDetailView.showTaskDeleted();
     }
 
     @Override
     public void completeTask() {
-        if (Strings.isNullOrEmpty(mTaskId)) {
-            mTaskDetailView.showMissingTask();
-            return;
-        }
+//        if (Strings.isNullOrEmpty(mTaskId)) {
+//            mTaskDetailView.showMissingTask();
+//            return;
+//        }
         mTasksRepository.completeTask(mTaskId);
         mTaskDetailView.showTaskMarkedComplete();
     }
 
     @Override
     public void activateTask() {
-        if (Strings.isNullOrEmpty(mTaskId)) {
-            mTaskDetailView.showMissingTask();
-            return;
-        }
+//        if (Strings.isNullOrEmpty(mTaskId)) {
+//            mTaskDetailView.showMissingTask();
+//            return;
+//        }
         mTasksRepository.activateTask(mTaskId);
         mTaskDetailView.showTaskMarkedActive();
     }
@@ -89,10 +89,10 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
     }
 
     private void openTask() {
-        if (Strings.isNullOrEmpty(mTaskId)) {
-            mTaskDetailView.showMissingTask();
-            return;
-        }
+//        if (Strings.isNullOrEmpty(mTaskId)) {
+//            mTaskDetailView.showMissingTask();
+//            return;
+//        }
 
         mTaskDetailView.setLoadingIndicator(true);
         mCompositeDisposable.add(mTasksRepository
@@ -126,7 +126,7 @@ public class TaskDetailPresenter implements TaskDetailContract.Presenter {
         } else {
             mTaskDetailView.showDescription(description);
         }
-        mTaskDetailView.showCompletionStatus(task.isCompleted());
+        mTaskDetailView.showCompletionStatus(task.getCompleted());
     }
 
     @Override
